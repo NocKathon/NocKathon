@@ -9,11 +9,12 @@ app = FastAPI()
 
 ## CONSTS
 FRONTEND_URL = ""
-RUNDECK_SERVER = ""
-RUNDECK_PORT = 0
-RuNDECK_API_KEY = ""
+RUNDECK_SERVER = "20.55.57.106"
+RUNDECK_PORT = 4440
+RUNDECK_USER = "admin"
+RUNDECK_PASS = "admin"
 
-rundeck_manager = RundeckManager(RUNDECK_SERVER, RUNDECK_PORT, RuNDECK_API_KEY)
+rundeck_manager = RundeckManager(RUNDECK_SERVER, RUNDECK_PORT, RUNDECK_USER, RUNDECK_PASS)
 
 ALERT = {}
 
@@ -31,26 +32,27 @@ class Formatted_alert(BaseModel):
 def read_root():
     return {"Hackathon": "NocKathon"}
 
-@app.post("alerts/splunk")
+@app.post("/alerts/splunk")
 def format_splunk_alert(alert_body):
     formatted_alert = Formatted_alert(name=alert_body.name, description=alert_body.description, tc=get_tc())
 
     format_and_notify_for_alert(formatted_alert)
 
-@app.post("alerts/am")
+@app.post("/alerts/am")
 def format_am_alert(alert_body):
     formatted_alert = Formatted_alert(name=alert_body.name, description=alert_body.description, tc=get_tc())
 
     format_and_notify_for_alert(formatted_alert)
 
-@app.post("alerts/formatted")
+@app.post("/alerts/formatted")
 def send_alert():
     a = ALERT.copy()
     ALERT = {}
     return a
 
-@app.get("rundeck/{team_name}")
+@app.get("/rundeck/{team_name}")
 def run_opening_access(team_name):
+    print(team_name)
     exec_status = rundeck_manager.run_job(team_name=team_name)
     return exec_status
 
