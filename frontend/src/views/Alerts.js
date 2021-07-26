@@ -1,4 +1,7 @@
-import React from "react";
+import SingleAlert from 'components/Alerts/SingleAlert'
+import React, { useState } from 'react'
+
+import axios from 'axios'
 
 // react-bootstrap components
 import {
@@ -11,75 +14,67 @@ import {
   Container,
   Row,
   Col,
-} from "react-bootstrap";
+} from 'react-bootstrap'
 
+const BACKEND_ADDRESS = '20.84.65.34'
+
+var wereAlertsLoaded = false
 function Alerts() {
+  const [alerts, setAlerts] = useState([])
+  if (!wereAlertsLoaded) {
+    axios
+      .get(`http://${BACKEND_ADDRESS}:2424/alerts/formatted`, {
+        timeout: 0,
+      })
+      .then((res) => {
+        console.log(res.data[0]['name'])
+        setAlerts(res.data)
+      })
+      .catch((error) => {
+        console.log(error)
+        console.error('There was an error!', error)
+      })
+    wereAlertsLoaded = true
+    console.log('AFTER SEND')
+  }
   return (
     <>
       <Container fluid>
         <Row>
-          <Col md="12">
-            <Card className="strpied-tabled-with-hover">
+          <Col md='12'>
+            <Card className='strpied-tabled-with-hover'>
               <Card.Header>
-                <Card.Title as="h4">Alerts</Card.Title>
-                <p className="card-category">
-                  Current alerts
-                </p>
+                <Card.Title as='h4'>Alerts</Card.Title>
+                <p className='card-category'>Current alerts</p>
               </Card.Header>
-              <Card.Body className="table-full-width table-responsive px-0">
-                <Table className="table-hover table-striped">
+              <Card.Body className='table-full-width table-responsive px-0'>
+                <Table className='table-hover table-striped'>
                   <thead>
                     <tr>
-                      <th className="border-0">ID</th>
-                      <th className="border-0">Alert Name</th>
-                      <th className="border-0">Alert description</th>
-                      <th className="border-0">Team Name</th>
-                      <th className="border-0">Contact</th>
+                      <th className='border-0'>Time</th>
+                      <th className='border-0'>Alert Name</th>
+                      <th className='border-0'>Alert description</th>
+                      <th className='border-0'>Alert severity</th>
+                      <th className='border-0'>Contact Name</th>
+                      <th className='border-0'>Contact phone</th>
+                      <th className='border-0'>Team Name</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>OpenShift is down</td>
-                      <td></td>
-                      <td>Niger</td>
-                      <td>Oud-Turnhout</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Minerva Hooper</td>
-                      <td>$23,789</td>
-                      <td>Curaçao</td>
-                      <td>Sinaai-Waas</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Sage Rodriguez</td>
-                      <td>$56,142</td>
-                      <td>Netherlands</td>
-                      <td>Baileux</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Philip Chaney</td>
-                      <td>$38,735</td>
-                      <td>Korea, South</td>
-                      <td>Overland Park</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>Doris Greene</td>
-                      <td>$63,542</td>
-                      <td>Malawi</td>
-                      <td>Feldkirchen in Kärnten</td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>Mason Porter</td>
-                      <td>$78,615</td>
-                      <td>Chile</td>
-                      <td>Gloucester</td>
-                    </tr>
+                    {alerts.map((alert) => {
+                      return (
+                        <SingleAlert
+                          key={alerts.indexOf(alert)}
+                          alertTime={alert.time}
+                          alertName={alert.name}
+                          alertDescription={alert.description}
+                          alertSeverity={alert.severity}
+                          contactName={alert.tc.fullName}
+                          contactPhoneNum={alert.tc.phoneNumber}
+                          teamName={alert.tc.teamName}
+                        />
+                      )
+                    })}
                   </tbody>
                 </Table>
               </Card.Body>
@@ -88,7 +83,7 @@ function Alerts() {
         </Row>
       </Container>
     </>
-  );
+  )
 }
 
-export default Alerts;
+export default Alerts
