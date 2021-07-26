@@ -20,6 +20,8 @@ def format_splunk_alert(alert_body):
         "tc": get_tc()
     }
 
+    format_and_notify_for_alert(formatted_alert)
+
 @app.post("alerts/am")
 def format_am_alert(alert_body):
     formatted_alert = {
@@ -27,6 +29,8 @@ def format_am_alert(alert_body):
         "description": alert_body.description,
         "tc": get_tc()
     }
+
+    format_and_notify_for_alert(formatted_alert)
 
 @app.post("alerts/formatted")
 def send_alert():
