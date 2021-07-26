@@ -3,9 +3,17 @@ from pydantic import BaseModel
 from fastapi import FastAPI
 import requests
 from datetime import datetime
+from RundeckManager import RundeckManager
 
 app = FastAPI()
+
+## CONSTS
 FRONTEND_URL = ""
+RUNDECK_SERVER = ""
+RUNDECK_PORT = 0
+RuNDECK_API_KEY = ""
+
+rundeck_manager = RundeckManager(RUNDECK_SERVER, RUNDECK_PORT, RuNDECK_API_KEY)
 
 ALERT = {}
 
@@ -40,6 +48,11 @@ def send_alert():
     a = ALERT.copy()
     ALERT = {}
     return a
+
+@app.get("rundeck/{team_name}")
+def run_opening_access(team_name):
+    exec_status = rundeck_manager.run_job(team_name=team_name)
+    return exec_status
 
 def get_tc():
     tc = TeamContact(fullname="Ben Shaver",phone_number="0543533078",team_name="IdfctsId")
