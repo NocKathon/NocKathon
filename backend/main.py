@@ -6,6 +6,8 @@ import requests
 app = FastAPI()
 FRONTEND_URL = ""
 
+ALERT = {}
+
 @app.get("/")
 def read_root():
     return {"Hackathon": "NocKathon"}
@@ -26,9 +28,21 @@ def format_am_alert(alert_body):
         "tc": get_tc()
     }
 
+@app.post("alerts/formatted")
+def send_alert():
+    a = ALERT
+    ALERT = {}
+    return a
+
 def get_tc():
     return "Ben 0543533078"
 
-def format_and_send_alert(formatted_alert):
-    requests.post(FRONTEND_URL, data=formatted_alert)
+def format_and_notify_for_alert(formatted_alert):
+    ALERT[formatted_alert[name] = {
+        "name": alert_body.name,
+        "description": alert_body.description,
+        "tc": get_tc()     
+    }
+
+    requests.get(FRONTEND_URL)
 
