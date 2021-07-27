@@ -20,8 +20,8 @@ const BACKEND_ADDRESS = '20.84.65.34'
 var wereAlertsLoaded = false
 
 const sitesColors = {
-  Marganit: '#66b2ff',
-  Mamram: '#ffb266',
+  Marganit: '#ff8000',
+  Mamram: '#0099ff',
 }
 const systems = [
   {
@@ -80,29 +80,24 @@ function SiteMap() {
                     {systems
                       .sort((a, b) => b.site - a.site)
                       .map((s) => (
-                        <tr>
+                        <tr
+                          style={{
+                            borderBottomColor: sitesColors[s.site],
+                            borderBottomWidth: '2px',
+                            borderBottomStyle: 'solid',
+                          }}
+                        >
                           <td>{s.name}</td>
                           <td
                             style={{
-                              backgroundColor: sitesColors[s.site],
+                              color: sitesColors[s.site],
+                              fontWeight: 'bold',
                             }}
                           >
                             {s.site}
                           </td>
                         </tr>
                       ))}
-                    {/* <tr>
-                      <td>Tirat HaAgam</td>
-                      <td style={{ backgroundColor: 'blue' }}>Marganit</td>
-                    </tr>
-                    <tr>
-                      <td>RH-SSO</td>
-                      <td style={{ backgroundColor: 'purple ' }}>Mamram</td>
-                    </tr>
-                    <tr>
-                      <td>NiFi Registry</td>
-                      <td style={{ backgroundColor: 'blue' }}>Marganit</td>
-                    </tr> */}
                   </tbody>
                 </Table>
               </Card.Body>
