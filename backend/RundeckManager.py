@@ -13,7 +13,10 @@ class RundeckManager(Rundeck):
             time.sleep(2)
             execution_state = self.rd.execution_state(job_id["id"])["executionState"]
 
-        return execution_state
+        ts = " ".join(self.rd.execution_state(job_id["id"])['startTime'].split("T"))
+        ts = ts.split(".")[0]
+
+        return { "status" : execution_state, "time": ts}
 
     def get_all_jobs_formatted(self):
         formmated_jobs = []
@@ -23,3 +26,6 @@ class RundeckManager(Rundeck):
             formmated_jobs.append({'systemName': job['name'],'teamName': job['group']})
 
         return formmated_jobs
+
+    def get_execution_history(self, team_name):
+        return(self.rd.get_executions_for_job(job_name=team_name, max=1))
