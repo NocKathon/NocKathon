@@ -123,6 +123,7 @@ function OpenAccess() {
                         <th className='border-0'>Team Name</th>
                         <th className='border-0'>Contact</th>
                         <th className='border-0'>Check Now</th>
+                        <th className='border-0'>View History</th>
                       </tr>
                     </thead>
                     <tbody>

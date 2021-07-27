@@ -1,4 +1,3 @@
-import SingleAlert from 'components/Alerts/SingleAlert'
 import React, { useState } from 'react'
 
 import axios from 'axios'
@@ -19,7 +18,7 @@ import {
 const BACKEND_ADDRESS = '20.84.65.34'
 
 var wereAlertsLoaded = false
-function Alerts() {
+function SiteMap() {
   const [alerts, setAlerts] = useState([])
   if (!wereAlertsLoaded) {
     axios
@@ -27,7 +26,7 @@ function Alerts() {
         timeout: 0,
       })
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data[0]['name'])
         setAlerts(res.data)
       })
       .catch((error) => {
@@ -44,37 +43,32 @@ function Alerts() {
           <Col md='12'>
             <Card className='strpied-tabled-with-hover'>
               <Card.Header>
-                <Card.Title as='h4'>Alerts</Card.Title>
-                <p className='card-category'>Current alerts</p>
+                <Card.Title as='h4'>System Site Mapping</Card.Title>
+                <p className='card-category'>
+                  Map system to current primary site
+                </p>
               </Card.Header>
               <Card.Body className='table-full-width table-responsive px-0'>
                 <Table className='table-hover table-striped'>
                   <thead>
                     <tr>
-                      <th className='border-0'>Time</th>
-                      <th className='border-0'>Alert Name</th>
-                      <th className='border-0'>Alert description</th>
-                      <th className='border-0'>Alert severity</th>
-                      <th className='border-0'>Contact Name</th>
-                      <th className='border-0'>Contact phone</th>
-                      <th className='border-0'>Team Name</th>
+                      <th className='border-0'>System Name</th>
+                      <th className='border-0'>Current Site</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {alerts.map((alert) => {
-                      return (
-                        <SingleAlert
-                          key={alerts.indexOf(alert)}
-                          alertTime={alert.time}
-                          alertName={alert.name}
-                          alertDescription={alert.description}
-                          alertSeverity={alert.severity}
-                          contactName={alert.tc.fullName}
-                          contactPhoneNum={alert.tc.phoneNumber}
-                          teamName={alert.tc.teamName}
-                        />
-                      )
-                    })}
+                    <tr>
+                      <td>Tirat HaAgam</td>
+                      <td style={{ backgroundColor: 'blue' }}>Marganit</td>
+                    </tr>
+                    <tr>
+                      <td>RH-SSO</td>
+                      <td style={{ backgroundColor: 'purple ' }}>Mamram</td>
+                    </tr>
+                    <tr>
+                      <td>NiFi Registry</td>
+                      <td style={{ backgroundColor: 'blue' }}>Marganit</td>
+                    </tr>
                   </tbody>
                 </Table>
               </Card.Body>
@@ -86,4 +80,4 @@ function Alerts() {
   )
 }
 
-export default Alerts
+export default SiteMap
