@@ -13,6 +13,7 @@ import {
   Col,
   InputGroup,
   FormControl,
+  Overlay,
 } from 'react-bootstrap'
 
 import play from 'assets/img/play.png'
@@ -68,6 +69,24 @@ function OpenAccess() {
               <Card.Body className='table-full-width table-responsive px-0'>
                 <Container>
                   <Button
+                    variant='success'
+                    style={{ borderColor: 'green', color: 'green' }}
+                    onClick={() => {
+                      console.log('Run all Open-Access')
+                      for (let index = 0; index < rdJobs.length; index++) {
+                        const element = document.getElementById('job_' + index)
+                        element.click()
+                      }
+                    }}
+                  >
+                    Run all
+                    <img
+                      className='pl-2'
+                      src={require('assets/img/play.png').default}
+                    />
+                  </Button>
+                  <Button
+                    style={{ borderColor: 'transparent' }}
                     className='mr-2'
                     onClick={() => {
                       console.log('Get all jobs from rundeck')
@@ -89,23 +108,6 @@ function OpenAccess() {
                     }}
                   >
                     <img src={require('assets/img/refresh.svg').default} />
-                  </Button>
-
-                  <Button
-                    onClick={() => {
-                      console.log('Run all Open-Access')
-                      for (let index = 0; index < rdJobs.length; index++) {
-                        const element = document.getElementById('job_' + index)
-                        element.click()
-                      }
-                      console.log('AFTER SEND')
-                    }}
-                  >
-                    Run all
-                    <img
-                      className='pl-2'
-                      src={require('assets/img/play.png').default}
-                    />
                   </Button>
 
                   <InputGroup className='mb-3 pt-4'>

@@ -18,6 +18,26 @@ import {
 const BACKEND_ADDRESS = '20.84.65.34'
 
 var wereAlertsLoaded = false
+
+const sitesColors = {
+  Marganit: '#66b2ff',
+  Mamram: '#ffb266',
+}
+const systems = [
+  {
+    name: "Tirat Ha'Agam",
+    site: 'Marganit',
+  },
+  {
+    name: 'RH-SSO',
+    site: 'Mamram',
+  },
+  {
+    name: 'NiFi Registry',
+    site: 'Marganit',
+  },
+]
+
 function SiteMap() {
   const [alerts, setAlerts] = useState([])
   if (!wereAlertsLoaded) {
@@ -57,7 +77,21 @@ function SiteMap() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    {systems
+                      .sort((a, b) => b.site - a.site)
+                      .map((s) => (
+                        <tr>
+                          <td>{s.name}</td>
+                          <td
+                            style={{
+                              backgroundColor: sitesColors[s.site],
+                            }}
+                          >
+                            {s.site}
+                          </td>
+                        </tr>
+                      ))}
+                    {/* <tr>
                       <td>Tirat HaAgam</td>
                       <td style={{ backgroundColor: 'blue' }}>Marganit</td>
                     </tr>
@@ -68,7 +102,7 @@ function SiteMap() {
                     <tr>
                       <td>NiFi Registry</td>
                       <td style={{ backgroundColor: 'blue' }}>Marganit</td>
-                    </tr>
+                    </tr> */}
                   </tbody>
                 </Table>
               </Card.Body>

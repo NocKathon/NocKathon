@@ -57,6 +57,7 @@ function SingleProject(props) {
       <td>{props.contact}</td>
       <td>
         <Button
+          style={{ borderColor: 'transparent' }}
           id={'job_' + props.systemID}
           onClick={() => {
             setStatus('Loading...')
@@ -86,7 +87,7 @@ function SingleProject(props) {
         </Button>
       </td>
       <td>
-        <Button>
+        <Button style={{ borderColor: 'transparent' }}>
           <img src={require('assets/img/eye.svg').default} alt='...' />
         </Button>
       </td>

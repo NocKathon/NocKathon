@@ -25,7 +25,11 @@ function Sidebar({ color, image, routes }) {
             className='simple-text logo-mini mx-1'
           >
             <div className='logo-img'>
-              <img src={require('assets/img/cloud.svg').default} alt='...' />
+              <img
+                style={{ color: 'white' }}
+                src={require('assets/img/cloud.svg').default}
+                alt='...'
+              />
             </div>
           </a>
           <a className='simple-text ml-2' href='http://www.creative-tim.com'>

@@ -27,7 +27,7 @@ function Alerts() {
         timeout: 0,
       })
       .then((res) => {
-        console.log(res.data)
+        console.log('ALERTS: ' + res.data)
         setAlerts(res.data)
       })
       .catch((error) => {

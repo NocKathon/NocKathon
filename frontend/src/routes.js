@@ -25,6 +25,7 @@ import Notifications from 'views/Notifications.js'
 import Alerts from 'views/Alerts.js'
 import OpenAccess from 'views/OpenAccess'
 import SiteMap from 'views/SystemMap'
+import Contact from 'components/Contacts/Contact'
 
 const dashboardRoutes = [
   {
@@ -42,10 +43,10 @@ const dashboardRoutes = [
     layout: '/admin',
   },
   {
-    path: '/toranim',
-    name: 'Toranim',
+    path: '/toran',
+    name: 'Toran',
     icon: 'nc-icon nc-circle-09',
-    component: UserProfile,
+    component: Contact,
     layout: '/admin',
   },
   {
